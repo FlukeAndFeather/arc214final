@@ -9,8 +9,8 @@ PRM <- read_csv("data/knb-lter-luq.20.4923064/RioMameyesPuenteRoto.csv")
 # going to just create one graph for Potassium, time on the x-axis, 
 # concentration on the y-axis, moving average 
 
-# combine csvs
-combined_data <- bind_rows(Bisley1, Bisley2, Bisley3, PRM) |> 
+# combine csvs / changed combined_data to joined_data
+joined_data <- bind_rows(Bisley1, Bisley2, Bisley3, PRM) |> 
   select("Sample_ID", "Sample_Date", "NO3-N", "K", "Ca", "Mg", "NH4-N")
 
 
@@ -19,3 +19,4 @@ ggplot(
   mapping = aes(x = Sample_Date, y = K)
 ) + 
   geom_line()
+
