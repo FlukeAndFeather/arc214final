@@ -28,7 +28,6 @@ ggplot(
   geom_line()
 
 # day 2 graph - one concentrations (potassium) graph with all sites
-
 ## first step create a tibble
 potassium_smoothed <- tibble(
   window_start = seq(ymd("1988-01-01"), ymd("1994-06-01"), by = "9 weeks"),
@@ -37,13 +36,29 @@ potassium_smoothed <- tibble(
   BQ3 = NA,
   PRM = NA
 )
-
 ## second step create for loop featuring windowing and calculating mean
 for (i in 1:nrow(potassium_smoothed)) {
   w1 <- potassium_smoothed$window_start[i]
-  w2 <- potassium_smoothed$window_start[i] + (9*7)
+  w2 <- potassium_smoothed$window_start[i] + (9 * 7)
 
-  joined_data |> 
-    filter(Sample_ID == Q1) 
+  bis1 <- Bisley1$K[Bisley1$Sample_Date >= w1 & Bisley1$Sample_Date < w2]
+  bis2 <- Bisley2$K[Bisley2$Sample_Date >= w1 & Bisley2$Sample_Date < w2]
+  bis3 <- Bisley3$K[Bisley3$Sample_Date >= w1 & Bisley3$Sample_Date < w2]
+  perm <- PRM$K[PRM$Sample_Date >= w1 & PRM$Sample_Date < w2]
 
-potassium_smoothed[1, 1] + (9 * 7)
+  potassium_smoothed$BQ1[i] <- mean(bis1, na.rm = TRUE)
+  potassium_smoothed$BQ2[i] <- mean(bis2, na.rm = TRUE)
+  potassium_smoothed$BQ3[i] <- mean(bis3, na.rm = TRUE)
+  potassium_smoothed$PRM[i] <- mean(perm, na.rm = TRUE)
+}
+## pivot data to long
+potassium_long <- potassium_smoothed |>
+  pivot_longer(
+    cols = c(BQ1, BQ2, BQ3, PRM),
+    names_to = "stream",
+    values_to = "K"
+  )
+# graph
+ggplot(potassium_long, aes(x = window_start, y = K, color = stream)) +
+  geom_line() +
+  labs(y = "K mg/L", x = "Year", color = "Stream")
