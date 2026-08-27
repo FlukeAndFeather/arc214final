@@ -51,4 +51,16 @@ big_tibble_longer <- pivot_longer(
 )
 
 ## graph
-ggplot(big_tibble_longer,
+ggplot(
+  big_tibble_longer,
+  mapping = aes(
+    x = window_start,
+    y = Concentration,
+    linetype = stream
+  )
+) +
+  geom_line() +
+  facet_wrap("Nutrients", scales = "free", ncol = 1, strip.position = "left") +
+  labs(
+    title = "Concentrations in Bisley, Puerto Rico streams before and after Hurricane Hugo, 9-wk moving averages."
+  )
