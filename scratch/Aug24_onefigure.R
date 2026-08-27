@@ -58,7 +58,7 @@ potassium_long <- potassium_smoothed |>
     names_to = "stream",
     values_to = "K"
   )
-# graph
+## graph
 ggplot(potassium_long, aes(x = window_start, y = K, color = stream)) +
   geom_line() +
   labs(y = "K mg/L", x = "Year", color = "Stream")
