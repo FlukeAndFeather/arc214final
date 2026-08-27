@@ -51,3 +51,4 @@ big_tibble_longer <- pivot_longer(
 )
 
 ## graph
+ggplot(big_tibble_longer,
