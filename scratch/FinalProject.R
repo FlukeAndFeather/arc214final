@@ -1,4 +1,5 @@
 library(tidyverse)
+source("R/moving-average.R")
 
 # read in csv's
 Bisley1 <- read_csv("data/knb-lter-luq.20.4923064/QuebradaCuenca1-Bisley.csv")
