@@ -11,6 +11,9 @@ Forest, Puerto Rico*
 - docs (houses all the files necessary to host paper website)
 - output (houses the output dataframe from cleaning and compiling data)
 - paper (contains the markdown file for the paper website)
+  - paper.qmd
+- R (houses R scripts describing functions)
+  - moving-average.R
 - scratch (houses the work-in-progress R scripts)
   - Aug24_onefigure.R
 
