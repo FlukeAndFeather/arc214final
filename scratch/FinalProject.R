@@ -1,4 +1,5 @@
 library(tidyverse)
+library(lubridate)
 source("R/moving-average.R")
 
 # read in csv's
@@ -28,8 +29,6 @@ ggplot(
 ) +
   geom_line()
 
-# day 2 graph - one concentrations (potassium) graph with all sites. Refactored on day 3
-
 ## Calling ma function on each stream
 bq1_smoothed <- moving_average(Bisley1)
 bq2_smoothed <- moving_average(Bisley2)
@@ -37,14 +36,18 @@ bq3_smoothed <- moving_average(Bisley3)
 prm_smoothed <- moving_average(PRM)
 
 ## Combining into a long format tibble
-potassium_long <- bind_rows(
+big_tibble <- bind_rows(
   bq1_smoothed |> mutate(stream = "BQ1"),
   bq2_smoothed |> mutate(stream = "BQ2"),
   bq3_smoothed |> mutate(stream = "BQ3"),
   prm_smoothed |> mutate(stream = "PRM")
 )
+# pivot the table
+big_tibble_longer <- pivot_longer(
+  data = big_tibble,
+  cols = c(k_mgl, mg_mgl, no3n_ugl, nh4n_ugl, ca_mgl),
+  names_to = "Nutrients",
+  values_to = "Concentration"
+)
 
 ## graph
-ggplot(potassium_long, aes(x = window_start, y = k_mgl, color = stream)) +
-  geom_line() +
-  labs(y = "K mg/L", x = "Year", color = "Stream")

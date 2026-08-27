@@ -2,7 +2,7 @@
 moving_average <- function(stream_data) {
   # Initialize a tibble to contain the results
   result <- tibble(
-    window_start = seq(ymd("1988-01-01"), ymd("1994-06-01"), by = "9 weeks"),
+    window_start = seq(ymd("1986-05-20"), ymd("1994-12-30"), by = "9 weeks"),
     k_mgl = NA,
     mg_mgl = NA,
     no3n_ugl = NA,
