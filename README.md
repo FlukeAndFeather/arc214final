@@ -8,6 +8,9 @@ Forest, Puerto Rico*
 
 ## Repository Structure 
 - data (houses all the raw data needed to produce the graph)
+- docs (houses all the files necessary to host paper website)
+- output (houses the output dataframe from cleaning and compiling data)
+- paper (contains the markdown file for the paper website)
 - scratch (houses the work-in-progress R scripts)
   - Aug24_onefigure.R
 
