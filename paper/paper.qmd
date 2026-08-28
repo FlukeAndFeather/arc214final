@@ -12,8 +12,8 @@
 
 # Methods
 ### Step 1: Read the necessary data in.
-### Step 2: Calculated the 9-week moving average for each nutrient at each site and combined that into one dataframe which was then pivoted. 
-### Step 3: Tweaked certain settings for the graph including ordering, renaming, and stacking. 
+### Step 2: Calculated the 9-week moving average concentration for each nutrient at each site and combined that into one dataframe which was then pivoted. 
+### Step 3: Tweaked specific settings for the creation of the graph including ordering, renaming, and stacking. 
 
 # Results
 ## 
@@ -54,7 +54,7 @@ intermediate_output |>
   geom_line() +
   facet_wrap("Nutrients", scales = "free", ncol = 1, strip.position = "left") +
   labs(
-    title = "Concentrations in Bisley, Puerto Rico streams before and after Hurricane Hugo.",
+    title = "Concentrations in Bisley, Puerto Rico streams before and after Hurricane Hugo",
     x = "Years"
   )
 ```
