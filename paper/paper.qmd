@@ -12,7 +12,7 @@
 
 # Methods
 ### Step 1: Read the necessary data in.
-### Step 2: Calculated the 9-week moving average concentration for each nutrient at each site and combined that into one dataframe which was then pivoted. 
+### Step 2: Calculated the 9-week moving average concentration for each nutrient we wanted (potassium, nitrate-N, magnesium, calcium, and ammonium-N) in at each site and combined that into one dataframe which was then pivoted in the data_reading_cleaning.R file. 
 ### Step 3: Tweaked specific settings for the creation of the graph including ordering, renaming, and stacking. 
 
 # Results
