@@ -22,6 +22,8 @@ All necessary data pertaining to this project is housed in this repository in th
 
 ## Author(s)
 - [Ashwin Chockkalingam](https://github.com/ashrcho)
+
+Collaborators:
 - [Erin Yang](https://github.com/cloover7)
 - [Olivia Knapp](https://github.com/gingersknapp)
 
