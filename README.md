@@ -22,6 +22,8 @@ All necessary data pertaining to this project is housed in this repository in th
 
 ## Author(s)
 [Ashwin Chockkalingam](https://github.com/ashrcho)
+[Erin Yang](https://github.com/cloover7)
+[Olivia Knapp](https://github.com/gingersknapp)
 
 ## References
 - Schaefer, Douglas. A., et al. “Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental Forest, Puerto Rico.” Journal of Tropical Ecology, vol. 16, no. 2, Mar. 2000, pp. 189–207, https://doi.org/10.1017/s0266467400001358. 
