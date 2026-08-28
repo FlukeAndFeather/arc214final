@@ -50,17 +50,40 @@ big_tibble_longer <- pivot_longer(
   values_to = "Concentration"
 )
 
-## graph
-ggplot(
-  big_tibble_longer,
-  mapping = aes(
-    x = window_start,
-    y = Concentration,
-    linetype = stream
-  )
-) +
+## set the levels of nutrient graphs according to the order in the actual figure
+big_tibble_longer |>
+  mutate(
+    Nutrients = fct_relevel(
+      Nutrients,
+      "k_mgl",
+      "no3n_ugl",
+      "mg_mgl",
+      "ca_mgl",
+      "nh4n_ugl"
+    )
+  ) |>
+  mutate(
+    Nutrients = fct_recode(
+      Nutrients,
+      "K mgl" = "k_mgl",
+      "NO3-N ugl" = "no3n_ugl",
+      "Mg mgl" = "mg_mgl",
+      "Ca mgl" = "ca_mgl",
+      "NH4-N ugl" = "nh4n_ugl"
+    )
+  ) |>
+  ## graph
+  ggplot(
+    big_tibble_longer,
+    mapping = aes(
+      x = window_start,
+      y = Concentration,
+      linetype = stream
+    )
+  ) +
   geom_line() +
   facet_wrap("Nutrients", scales = "free", ncol = 1, strip.position = "left") +
   labs(
-    title = "Concentrations in Bisley, Puerto Rico streams before and after Hurricane Hugo, 9-wk moving averages."
+    title = "Concentrations in Bisley, Puerto Rico streams before and after Hurricane Hugo.",
+    x = "Years"
   )

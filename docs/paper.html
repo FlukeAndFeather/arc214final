@@ -26,41 +26,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -90,267 +55,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="background" class="level1">
 <h1>Background</h1>
-<section id="loading-in-our-library-and-functions" class="level2">
-<h2 class="anchored" data-anchor-id="loading-in-our-library-and-functions">Loading in our library and functions</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.2.1     ✔ readr     2.2.0
-✔ forcats   1.0.1     ✔ stringr   1.6.0
-✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-✔ purrr     1.2.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"../R/moving-average.R"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="in-this-project-i-was-tasked-with-reproducing-a-figure-taken-from-the-research-paper-effects-of-hurricane-disturbance-on-stream-water-concentrations-and-fluxes-in-eight-tropical-forest-watersheds-of-the-luquillo-experimental-forest-puerto-rico.-the-figure-represents-9-week-moving-average-concentrations-of-potassium-nitrate-n-magnesium-calcium-and-ammonium-n-for-four-different-streams-in-puerto-rico-prm-bq1-bq2-and-bq3." class="level3">
+<h3 class="anchored" data-anchor-id="in-this-project-i-was-tasked-with-reproducing-a-figure-taken-from-the-research-paper-effects-of-hurricane-disturbance-on-stream-water-concentrations-and-fluxes-in-eight-tropical-forest-watersheds-of-the-luquillo-experimental-forest-puerto-rico.-the-figure-represents-9-week-moving-average-concentrations-of-potassium-nitrate-n-magnesium-calcium-and-ammonium-n-for-four-different-streams-in-puerto-rico-prm-bq1-bq2-and-bq3.">In this project I was tasked with reproducing a figure taken from the research paper “Effects of hurricane disturbance on stream water concentrations and fluxes in eight tropical forest watersheds of the Luquillo Experimental Forest, Puerto Rico”. The figure represents 9 week moving average concentrations of potassium, nitrate-N, magnesium, calcium, and ammonium-N for four different streams in Puerto Rico (PRM, BQ1, BQ2, and BQ3).</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ActualFigure.png" class="img-fluid figure-img"></p>
+<figcaption>The figure to reproduce from Schaefer et al.&nbsp;(2000)</figcaption>
+</figure>
 </div>
 </section>
 </section>
 <section id="data" class="level1">
 <h1>Data</h1>
-<section id="read-in-csv-files" class="level2">
-<h2 class="anchored" data-anchor-id="read-in-csv-files">Read in CSV files</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Bisley1 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"../data/knb-lter-luq.20.4923064/QuebradaCuenca1-Bisley.csv"</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
-e.g.:
-  dat &lt;- vroom(...)
-  problems(dat)</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 1847 Columns: 39
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr   (8): Sample_ID, NitrateCode, SulfateCode, NH4Code, PO4Code, DOCCode, T...
-dbl  (21): Code, Sample_Time, Gage_Ht, Temp, pH, Cond, Cl, NO3-N, SO4-S, Na,...
-lgl   (9): TDP, ChlorideCode, SodiumCode, PotassiumCode, MagnesiumCode, Calc...
-date  (1): Sample_Date
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Bisley2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"../data/knb-lter-luq.20.4923064/QuebradaCuenca2-Bisley.csv"</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 1838 Columns: 39
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr   (9): Sample_ID, NitrateCode, SulfateCode, PotassiumCode, NH4Code, PO4C...
-dbl  (21): Code, Sample_Time, Gage_Ht, Temp, pH, Cond, Cl, NO3-N, SO4-S, Na,...
-lgl   (8): TDP, ChlorideCode, SodiumCode, MagnesiumCode, CalciumCode, DICCod...
-date  (1): Sample_Date
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Bisley3 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"../data/knb-lter-luq.20.4923064/QuebradaCuenca3-Bisley.csv"</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 1835 Columns: 39
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr   (9): Sample_ID, NitrateCode, SulfateCode, NH4Code, PO4Code, DOCCode, T...
-dbl  (21): Code, Sample_Time, Gage_Ht, Temp, pH, Cond, Cl, NO3-N, SO4-S, Na,...
-lgl   (8): TDP, ChlorideCode, SodiumCode, PotassiumCode, MagnesiumCode, Calc...
-date  (1): Sample_Date
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>PRM <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/knb-lter-luq.20.4923064/RioMameyesPuenteRoto.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 1657 Columns: 39
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr   (8): Sample_ID, NitrateCode, SulfateCode, NH4Code, PO4Code, TDNCode, S...
-dbl  (21): Code, Sample_Time, Gage_Ht, Temp, pH, Cond, Cl, NO3-N, SO4-S, Na,...
-lgl   (9): TDP, ChlorideCode, SodiumCode, PotassiumCode, MagnesiumCode, Calc...
-date  (1): Sample_Date
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-</div>
+<section id="the-data-was-provided-via-the-mcdowell-and-international-institute-of-tropical-forestry-and-the-usda-forest-service-and-made-available-through-the-environmental-data-initiative-data-portal." class="level3">
+<h3 class="anchored" data-anchor-id="the-data-was-provided-via-the-mcdowell-and-international-institute-of-tropical-forestry-and-the-usda-forest-service-and-made-available-through-the-environmental-data-initiative-data-portal.">The data was provided via the McDowell and International Institute of Tropical Forestry, and the USDA Forest Service and made available through the Environmental Data Initiative Data Portal.</h3>
 </section>
-<section id="data-exploration" class="level2">
-<h2 class="anchored" data-anchor-id="data-exploration">Data Exploration</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Bisley1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 39
-  Sample_ID      Code Sample_Date Sample_Time Gage_Ht  Temp    pH  Cond    Cl
-  &lt;chr&gt;         &lt;dbl&gt; &lt;date&gt;            &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 Q1        100012001 1986-05-20           NA      NA    NA  7.35  90.1   8.2
-2 Q1        100012002 1986-05-27           NA      NA    NA  7.48  85.4  NA  
-3 Q1        100012003 1986-06-03           NA      NA    NA  7.36  85.4  NA  
-4 Q1        100012004 1986-10-21         1302      NA    24  7.39  88.5   8.7
-5 Q1        100012005 1986-10-28         1124      NA    23  7.34  91.4   8.5
-6 Q1        100012006 1986-11-04         1150      NA    23  7.45  87.7   8.5
-# ℹ 30 more variables: `NO3-N` &lt;dbl&gt;, `SO4-S` &lt;dbl&gt;, Na &lt;dbl&gt;, K &lt;dbl&gt;,
-#   Mg &lt;dbl&gt;, Ca &lt;dbl&gt;, `NH4-N` &lt;dbl&gt;, `PO4-P` &lt;dbl&gt;, DOC &lt;dbl&gt;, DIC &lt;dbl&gt;,
-#   TDN &lt;dbl&gt;, TDP &lt;lgl&gt;, SiO2 &lt;dbl&gt;, DON &lt;dbl&gt;, ChlorideCode &lt;lgl&gt;,
-#   NitrateCode &lt;chr&gt;, SulfateCode &lt;chr&gt;, SodiumCode &lt;lgl&gt;,
-#   PotassiumCode &lt;lgl&gt;, MagnesiumCode &lt;lgl&gt;, CalciumCode &lt;lgl&gt;, NH4Code &lt;chr&gt;,
-#   PO4Code &lt;chr&gt;, DOCCode &lt;chr&gt;, DICCode &lt;lgl&gt;, TDNCode &lt;chr&gt;, SiO2Code &lt;lgl&gt;,
-#   DONCode &lt;chr&gt;, TSS &lt;dbl&gt;, Turbidity &lt;lgl&gt;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Bisley2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 39
-  Sample_ID      Code Sample_Date Sample_Time Gage_Ht  Temp    pH  Cond    Cl
-  &lt;chr&gt;         &lt;dbl&gt; &lt;date&gt;            &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 Q2        100013001 1986-05-20           NA      NA  NA    7.52  90.2   7.3
-2 Q2        100013002 1986-05-27           NA      NA  NA    7.59  84.4  NA  
-3 Q2        100013003 1986-06-03           NA      NA  NA    7.55  83.3  NA  
-4 Q2        100013004 1986-10-21         1310      NA  24    7.42  84.8   7.3
-5 Q2        100013005 1986-10-28         1136      NA  23    7.39  85     7.3
-6 Q2        100013006 1986-11-04         1100      NA  22.5  7.43  84.2   7.3
-# ℹ 30 more variables: `NO3-N` &lt;dbl&gt;, `SO4-S` &lt;dbl&gt;, Na &lt;dbl&gt;, K &lt;dbl&gt;,
-#   Mg &lt;dbl&gt;, Ca &lt;dbl&gt;, `NH4-N` &lt;dbl&gt;, `PO4-P` &lt;dbl&gt;, DOC &lt;dbl&gt;, DIC &lt;dbl&gt;,
-#   TDN &lt;dbl&gt;, TDP &lt;lgl&gt;, SiO2 &lt;dbl&gt;, DON &lt;dbl&gt;, ChlorideCode &lt;lgl&gt;,
-#   NitrateCode &lt;chr&gt;, SulfateCode &lt;chr&gt;, SodiumCode &lt;lgl&gt;,
-#   PotassiumCode &lt;chr&gt;, MagnesiumCode &lt;lgl&gt;, CalciumCode &lt;lgl&gt;, NH4Code &lt;chr&gt;,
-#   PO4Code &lt;chr&gt;, DOCCode &lt;chr&gt;, DICCode &lt;lgl&gt;, TDNCode &lt;chr&gt;, SiO2Code &lt;lgl&gt;,
-#   DONCode &lt;chr&gt;, TSS &lt;dbl&gt;, Turbidity &lt;lgl&gt;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Bisley3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 39
-  Sample_ID      Code Sample_Date Sample_Time Gage_Ht  Temp    pH  Cond    Cl
-  &lt;chr&gt;         &lt;dbl&gt; &lt;date&gt;            &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 Q3        100014001 1986-05-20           NA      NA  NA    7.44  85.1   8.3
-2 Q3        100014002 1986-05-27           NA      NA  NA    7.53  81.1  NA  
-3 Q3        100014003 1986-06-03           NA      NA  NA    7.49  80.3  NA  
-4 Q3        100014004 1986-10-21         1250      NA  23.5  7.11  78.5   6.9
-5 Q3        100014005 1986-10-28         1145      NA  23    7.42  80.3   7.9
-6 Q3        100014006 1986-11-04         1050      NA  23    7.46  79.4   8.2
-# ℹ 30 more variables: `NO3-N` &lt;dbl&gt;, `SO4-S` &lt;dbl&gt;, Na &lt;dbl&gt;, K &lt;dbl&gt;,
-#   Mg &lt;dbl&gt;, Ca &lt;dbl&gt;, `NH4-N` &lt;dbl&gt;, `PO4-P` &lt;dbl&gt;, DOC &lt;dbl&gt;, DIC &lt;dbl&gt;,
-#   TDN &lt;dbl&gt;, TDP &lt;lgl&gt;, SiO2 &lt;dbl&gt;, DON &lt;dbl&gt;, ChlorideCode &lt;lgl&gt;,
-#   NitrateCode &lt;chr&gt;, SulfateCode &lt;chr&gt;, SodiumCode &lt;lgl&gt;,
-#   PotassiumCode &lt;lgl&gt;, MagnesiumCode &lt;lgl&gt;, CalciumCode &lt;lgl&gt;, NH4Code &lt;chr&gt;,
-#   PO4Code &lt;chr&gt;, DOCCode &lt;chr&gt;, DICCode &lt;lgl&gt;, TDNCode &lt;chr&gt;, SiO2Code &lt;chr&gt;,
-#   DONCode &lt;chr&gt;, TSS &lt;dbl&gt;, Turbidity &lt;lgl&gt;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(PRM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 39
-  Sample_ID  Code Sample_Date Sample_Time Gage_Ht  Temp    pH  Cond    Cl
-  &lt;chr&gt;     &lt;dbl&gt; &lt;date&gt;            &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 MPR        1526 1989-05-16          933    1.78    NA  7.08 108      NA
-2 MPR        1539 1989-05-23         1005    1.9     NA  7.45  92.8    NA
-3 MPR        1570 1989-05-30         1034    2.76    NA  7.19  68.6    NA
-4 MPR        1582 1989-06-06         1110    2.42    NA  7.54  72.6    NA
-5 MPR        1599 1989-06-13         1000    2.13    NA  7.34  85      NA
-6 MPR        1657 1989-06-20         1010    2.18    NA  7.67  81.3    NA
-# ℹ 30 more variables: `NO3-N` &lt;dbl&gt;, `SO4-S` &lt;dbl&gt;, Na &lt;dbl&gt;, K &lt;dbl&gt;,
-#   Mg &lt;dbl&gt;, Ca &lt;dbl&gt;, `NH4-N` &lt;dbl&gt;, `PO4-P` &lt;dbl&gt;, DOC &lt;dbl&gt;, DIC &lt;dbl&gt;,
-#   TDN &lt;dbl&gt;, TDP &lt;lgl&gt;, SiO2 &lt;dbl&gt;, DON &lt;dbl&gt;, ChlorideCode &lt;lgl&gt;,
-#   NitrateCode &lt;chr&gt;, SulfateCode &lt;chr&gt;, SodiumCode &lt;lgl&gt;,
-#   PotassiumCode &lt;lgl&gt;, MagnesiumCode &lt;lgl&gt;, CalciumCode &lt;lgl&gt;, NH4Code &lt;chr&gt;,
-#   PO4Code &lt;chr&gt;, DOCCode &lt;lgl&gt;, DICCode &lt;lgl&gt;, TDNCode &lt;chr&gt;, SiO2Code &lt;chr&gt;,
-#   DONCode &lt;chr&gt;, TSS &lt;dbl&gt;, Turbidity &lt;lgl&gt;</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Bisley1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "Sample_ID"     "Code"          "Sample_Date"   "Sample_Time"  
- [5] "Gage_Ht"       "Temp"          "pH"            "Cond"         
- [9] "Cl"            "NO3-N"         "SO4-S"         "Na"           
-[13] "K"             "Mg"            "Ca"            "NH4-N"        
-[17] "PO4-P"         "DOC"           "DIC"           "TDN"          
-[21] "TDP"           "SiO2"          "DON"           "ChlorideCode" 
-[25] "NitrateCode"   "SulfateCode"   "SodiumCode"    "PotassiumCode"
-[29] "MagnesiumCode" "CalciumCode"   "NH4Code"       "PO4Code"      
-[33] "DOCCode"       "DICCode"       "TDNCode"       "SiO2Code"     
-[37] "DONCode"       "TSS"           "Turbidity"    </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Bisley2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "Sample_ID"     "Code"          "Sample_Date"   "Sample_Time"  
- [5] "Gage_Ht"       "Temp"          "pH"            "Cond"         
- [9] "Cl"            "NO3-N"         "SO4-S"         "Na"           
-[13] "K"             "Mg"            "Ca"            "NH4-N"        
-[17] "PO4-P"         "DOC"           "DIC"           "TDN"          
-[21] "TDP"           "SiO2"          "DON"           "ChlorideCode" 
-[25] "NitrateCode"   "SulfateCode"   "SodiumCode"    "PotassiumCode"
-[29] "MagnesiumCode" "CalciumCode"   "NH4Code"       "PO4Code"      
-[33] "DOCCode"       "DICCode"       "TDNCode"       "SiO2Code"     
-[37] "DONCode"       "TSS"           "Turbidity"    </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(Bisley3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "Sample_ID"     "Code"          "Sample_Date"   "Sample_Time"  
- [5] "Gage_Ht"       "Temp"          "pH"            "Cond"         
- [9] "Cl"            "NO3-N"         "SO4-S"         "Na"           
-[13] "K"             "Mg"            "Ca"            "NH4-N"        
-[17] "PO4-P"         "DOC"           "DIC"           "TDN"          
-[21] "TDP"           "SiO2"          "DON"           "ChlorideCode" 
-[25] "NitrateCode"   "SulfateCode"   "SodiumCode"    "PotassiumCode"
-[29] "MagnesiumCode" "CalciumCode"   "NH4Code"       "PO4Code"      
-[33] "DOCCode"       "DICCode"       "TDNCode"       "SiO2Code"     
-[37] "DONCode"       "TSS"           "Turbidity"    </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(PRM)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> [1] "Sample_ID"     "Code"          "Sample_Date"   "Sample_Time"  
- [5] "Gage_Ht"       "Temp"          "pH"            "Cond"         
- [9] "Cl"            "NO3-N"         "SO4-S"         "Na"           
-[13] "K"             "Mg"            "Ca"            "NH4-N"        
-[17] "PO4-P"         "DOC"           "DIC"           "TDN"          
-[21] "TDP"           "SiO2"          "DON"           "ChlorideCode" 
-[25] "NitrateCode"   "SulfateCode"   "SodiumCode"    "PotassiumCode"
-[29] "MagnesiumCode" "CalciumCode"   "NH4Code"       "PO4Code"      
-[33] "DOCCode"       "DICCode"       "TDNCode"       "SiO2Code"     
-[37] "DONCode"       "TSS"           "Turbidity"    </code></pre>
-</div>
-</div>
+<section id="i-used-the-following-datasets-in-my-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="i-used-the-following-datasets-in-my-analysis">I used the following datasets in my analysis:</h3>
+<ul>
+<li>QuebradaCuenca1-Bisley.csv</li>
+<li>QuebradaCuenca2-Bisley.csv</li>
+<li>QuebradaCuenca3-Bisley.csv</li>
+<li>RioMameyesPuenteRoto.csv</li>
+</ul>
 </section>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
-<section id="create-the-lines" class="level2">
-<h2 class="anchored" data-anchor-id="create-the-lines">Create the lines</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>bq1_smoothed <span class="ot">&lt;-</span> <span class="fu">moving_average</span>(Bisley1)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>bq2_smoothed <span class="ot">&lt;-</span> <span class="fu">moving_average</span>(Bisley2)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>bq3_smoothed <span class="ot">&lt;-</span> <span class="fu">moving_average</span>(Bisley3)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>prm_smoothed <span class="ot">&lt;-</span> <span class="fu">moving_average</span>(PRM)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Combining into a long format tibble</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>potassium_long <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  bq1_smoothed <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">stream =</span> <span class="st">"BQ1"</span>),</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  bq2_smoothed <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">stream =</span> <span class="st">"BQ2"</span>),</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  bq3_smoothed <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">stream =</span> <span class="st">"BQ3"</span>),</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  prm_smoothed <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">stream =</span> <span class="st">"PRM"</span>)</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="step-1-read-the-necessary-data-in." class="level3">
+<h3 class="anchored" data-anchor-id="step-1-read-the-necessary-data-in.">Step 1: Read the necessary data in.</h3>
+</section>
+<section id="step-2-calculated-the-9-week-moving-average-for-each-nutrient-at-each-site-and-combined-that-into-one-dataframe-which-was-then-pivoted." class="level3">
+<h3 class="anchored" data-anchor-id="step-2-calculated-the-9-week-moving-average-for-each-nutrient-at-each-site-and-combined-that-into-one-dataframe-which-was-then-pivoted.">Step 2: Calculated the 9-week moving average for each nutrient at each site and combined that into one dataframe which was then pivoted.</h3>
+</section>
+<section id="step-3-tweaked-certain-settings-for-the-graph-including-ordering-renaming-and-stacking." class="level3">
+<h3 class="anchored" data-anchor-id="step-3-tweaked-certain-settings-for-the-graph-including-ordering-renaming-and-stacking.">Step 3: Tweaked certain settings for the graph including ordering, renaming, and stacking.</h3>
 </section>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
-<section id="graph" class="level2">
-<h2 class="anchored" data-anchor-id="graph">Graph</h2>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(potassium_long, <span class="fu">aes</span>(<span class="at">x =</span> window_start, <span class="at">y =</span> k_mgl, <span class="at">color =</span> stream)) <span class="sc">+</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"K mg/L"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">color =</span> <span class="st">"Stream"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 17 rows containing missing values or values outside the scale range
-(`geom_line()`).</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="paper_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="paper_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
